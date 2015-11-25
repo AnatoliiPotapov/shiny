@@ -1,0 +1,17 @@
+{
+    "contents" : "\n# This is the server logic for a Shiny web application.\n# You can find out more about building applications with Shiny here:\n#\n# http://shiny.rstudio.com\n#\n\nlibrary(shiny)\nlibrary(chipPCR)\nsource(\"./R/readDT.R\")\n\n\nshinyServer(function(input, output) {\n\n  experimentFile <- reactive({\n    \n    inFile <- input$experimentFile\n    \n    if (is.null(inFile))\n      return(NULL)\n    \n    read_DT(inFile$name, inFile$datapath)\n  \n  })\n  \n  \n  output$rawCurves <- renderPlot({\n    \n    plotCurves(1:50 , experimentFile()$optic$FAM_2, one.plot = TRUE)\n\n  })\n  \n  output$ppCurves <- renderPlot({\n    \n    plotCurves(1:50 , experimentFile()$optic$FAM_2, CPP = TRUE)\n    \n  })\n\n})\n",
+    "created" : 1448433998099.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3886747159",
+    "id" : "CCE99532",
+    "lastKnownWriteTime" : 1448437736,
+    "path" : "~/Desktop/Разработка/TestGen/CORE/R/ShinyGUI/server.R",
+    "project_path" : "server.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

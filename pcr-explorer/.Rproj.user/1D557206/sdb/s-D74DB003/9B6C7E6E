@@ -1,0 +1,17 @@
+{
+    "contents" : "library(stringr)\n\nread_DT<-function(name,file_path){\n  \n  if (length(grep(\".r48\", x = name)) > 0)  {num = 48}\n  else if (length(grep(\".r96\", x = name)) > 0) {num = 96}\n  else return(NULL)\n  \n  all_data = readLines(file_path)\n  output <-  list()\n    output$version = get_version(all_data) \n    output$date = get_date(all_data) \n    output$operator = get_operator(all_data) \n    output$program = get_program(all_data) \n    output$optic = get_optic_curves(all_data, num) \n    output$labels = get_sample_labels(all_data, num)\n  return (output)\n}\n\nget_sample_labels <- function(all_data, num){\n  start_index = grep(\"\\\\$Information about tubes:\\\\$\", all_data) \n  labels <- list()\n  for (i in 1:num){\n    slice_data = all_data[start_index + i]\n    labels[[i]] <- gsub(\"[^ ]+ +[^ ]+ +[^ ]+ +[^ ]+ +[^ ]+ +[^ ]+ +[^ ]+(.+)\",\"\\\\1\",slice_data)\n  }\n  return(labels)\n}\n\nget_program<-function(all_data){\n  program_data<-list()\n  start_index = grep(\"\\\\$Program of amplification:\\\\$\", all_data)\n  end_index =  start_index - 1 + grep(\"\\\\$(.*)\\\\$\", all_data[-(1:start_index)])[1]\n  amplification_data = grep(\"\\\\$Program of amplification:\\\\$|\\tXCYC|\\tXLEV\",all_data[start_index:end_index],value=TRUE)\n  amplification_data = sub(\"\\\\$Program of amplification:\\\\$\", \"Программа амплификации:\", amplification_data)\n  amplification_data = gsub(\"\\tXCYC\", \"Колличество циклов:\", amplification_data)\n  amplification_data = gsub(\"\\tXLEV +([0-9][0-9])([0-9][0-9]) +([0-9]+).*\", \"Температура: \\\\1.\\\\2 С, продолжительность: \\\\3 секунд\", amplification_data, perl=TRUE)\n  return(amplification_data) \n}\n\nget_operator<-function(all_data){\n  data_index = grep(\"\\\\$Operator:\\\\$\", all_data)\n  operator_data = sub(\"\\\\$Operator:\\\\$\", \"Оператор:\", all_data[data_index])\n  return(operator_data)\n}\n\nget_version<-function(all_data){\n  data_index = grep(\"\\\\$Version:\\\\$\", all_data)\n  version_data = sub(\"\\\\$Version:\\\\$\", \"Версия:\", all_data[data_index])\n  return(version_data)\n}\n\nget_date<-function(all_data){\n  data_index = grep(\"\\\\$Data:\\\\$\", all_data)\n  date_data = sub(\"\\\\$Data:\\\\$\", \"Дата:\", all_data[data_index])\n  return(date_data)\n}\n\nget_optic_curves<-function(all_data, num){\n  # находим начало оптических измерений\n  data_index = grep(\"\\\\$Results of optical measurements:\\\\$\", all_data)\n  # создаем таблицу оптических измерений\n  optical_data = all_data[-(1:data_index)]\n  \n  output <- list()\n  \n  optic_channels=list(\"FAM_1\", \"FAM_2\", \"HEX_1\", \"HEX_2\", \"ROX_1\", \"ROX_2\", \"Cy5_1\", \"Cy5_2\", \"Cy5.5_1\", \"Cy5.5_2\")\n  for ( index in 1:10 )  {\n    \n    mt <- matrix(nrow = length(optical_data)/10, ncol = num)\n    for ( i in 1:(length(optical_data)/10) ) {\n      mt[i,] <- extract_optic_data(optical_data[(((i-1) * 10) + index)])[-(1:6)]\n    }\n    \n    output[[optic_channels[[index]]]] <- mt\n  }\n\n  return(output)\n}\n\nextract_optic_data<-function(data){\n  result = as.numeric( unlist(str_extract_all(data, \"( )+[0-9]+\")))\n  return(result)\n}\n\n\n",
+    "created" : 1448435416673.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1431476845",
+    "id" : "9B6C7E6E",
+    "lastKnownWriteTime" : 1448437545,
+    "path" : "~/Desktop/Разработка/TestGen/CORE/R/ShinyGUI/R/readDT.R",
+    "project_path" : "R/readDT.R",
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

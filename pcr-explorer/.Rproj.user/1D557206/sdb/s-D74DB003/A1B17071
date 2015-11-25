@@ -1,0 +1,17 @@
+{
+    "contents" : "\n# This is the user-interface definition of a Shiny web application.\n# You can find out more about building applications with Shiny here:\n#\n# http://shiny.rstudio.com\n#\n\nlibrary(shiny)\n\nshinyUI(fluidPage(\n\n  # Application title\n  titlePanel(\"Тестирование алгоритма\"),\n\n  # Sidebar with a slider input for number of bins\n  sidebarLayout(\n    sidebarPanel(\n      fileInput('experimentFile', 'Choose .r48 / .r96',\n                accept=c('.r48,.r96'))\n    ),\n\n    # Show a plot of the generated distribution\n    mainPanel(\n\n      plotOutput(\"rawCurves\"),\n      plotOutput(\"ppCurves\")\n    )\n  )\n))\n",
+    "created" : 1448433997838.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1186982799",
+    "id" : "A1B17071",
+    "lastKnownWriteTime" : 1448437592,
+    "path" : "~/Desktop/Разработка/TestGen/CORE/R/ShinyGUI/ui.R",
+    "project_path" : "ui.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
