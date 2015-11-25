@@ -1,0 +1,20 @@
+---
+title: "info"
+author: "Потапов Анатолий"
+date: "August 18, 2015"
+output: html_document
+mathjax: "//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+---
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+Рассчёт теплопроводности образца ведется по формуле:
+
+$$
+K = \rho DC,\text{ где}
+$$
+
+$$
+D = \frac{(l_\text{д} - l_\text{б})^2}{2(\Delta t) ln(\frac{A_\text{б}}{A_\text{д}})}
+$$
