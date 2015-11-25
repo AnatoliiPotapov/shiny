@@ -22,8 +22,8 @@ shinyUI(fluidPage(
     # Show a plot of the generated distribution
     mainPanel(
 
-      plotOutput("rawCurves"),
-      plotOutput("ppCurves")
+      plotOutput("rawCurves")
+      #plotOutput("ppCurves")
     )
   )
 ))
